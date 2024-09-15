@@ -5,11 +5,13 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Dashboard from "../pages/Dashboard/Dashboard/Dashboard";
 import Login from "../pages/auth/Login/Login";
 import Signup from "../pages/auth/Signup/Signup";
+import NotFound from "../pages/NotFound/NotFound";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement: <NotFound />,
     children: [
       {
         path: "/",
@@ -28,6 +30,7 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <DashboardLayout />,
+    errorElement: <NotFound />,
     children: [
       {
         path: "/dashboard",
