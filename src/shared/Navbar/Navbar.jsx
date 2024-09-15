@@ -1,6 +1,21 @@
-import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 function Navbar() {
+  const { user, logout } = useAuth();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const handleLogout = () => {
+    logout()
+      .then()
+      .catch((err) => console.error(err));
+  };
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
   const navItems = (
     <>
       <li>
@@ -11,6 +26,7 @@ function Navbar() {
       </li>
     </>
   );
+
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -44,7 +60,34 @@ function Navbar() {
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
       <div className="navbar-end">
-        <NavLink to="/login">Login</NavLink>
+        {user ? (
+          <div className="relative">
+            <button onClick={toggleDropdown}>
+              <img
+                className="w-12 h-12 rounded-full"
+                src={user?.photoURL}
+                title={user?.displayName}
+                alt="User"
+              />
+            </button>
+            {dropdownOpen && (
+              <ul className="absolute right-0 mt-2 w-48 bg-base-100 rounded-lg shadow-lg z-10">
+                <li>
+                  <button onClick={handleLogout} className="block px-4 py-2">
+                    Logout
+                  </button>
+                </li>
+                <li>
+                  <Link to="/dashboard" className="block px-4 py-2">
+                    Dashboard
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </div>
+        ) : (
+          <NavLink to="/login">Login</NavLink>
+        )}
       </div>
     </div>
   );
