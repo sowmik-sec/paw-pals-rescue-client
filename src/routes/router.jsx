@@ -7,6 +7,7 @@ import Login from "../pages/auth/Login/Login";
 import Signup from "../pages/auth/Signup/Signup";
 import NotFound from "../pages/NotFound/NotFound";
 import PetStoryPage from "../pages/Home/SuccessStories/PetStoryPage";
+import Pets from "../pages/Pets/Pets/Pets";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: `/stories/:id`,
         element: <PetStoryPage />,
+      },
+      {
+        path: `/pets`,
+        element: <Pets />,
       },
     ],
   },

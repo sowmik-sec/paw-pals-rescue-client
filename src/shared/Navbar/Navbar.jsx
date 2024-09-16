@@ -19,7 +19,7 @@ function Navbar() {
   const navItems = (
     <>
       <li>
-        <NavLink to="/pet-listing">Pet Listing</NavLink>
+        <NavLink to="/pets">Pet Listing</NavLink>
       </li>
       <li>
         <NavLink to="/donation-campaigns">Donation Campaigns</NavLink>
