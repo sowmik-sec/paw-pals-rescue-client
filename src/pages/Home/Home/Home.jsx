@@ -4,6 +4,7 @@ import PetCategories from "../PetCategories/PetCategories";
 import CallToAction from "../CallToAction/CallToAction";
 import AboutUs from "../AboutUs/AboutUs";
 import VolunteerDonate from "../VolunTeerDonate/VolunTeerDonate";
+import SuccessStories from "../SuccessStories/SuccessStories";
 
 function Home() {
   return (
@@ -15,6 +16,7 @@ function Home() {
       <PetCategories />
       <CallToAction />
       <AboutUs />
+      <SuccessStories />
       <VolunteerDonate />
     </div>
   );
