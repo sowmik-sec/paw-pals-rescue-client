@@ -32,6 +32,10 @@ const router = createBrowserRouter([
         element: <PetStoryPage />,
       },
       {
+        path: `/pets/:category`,
+        element: <Pets />,
+      },
+      {
         path: `/pets`,
         element: <Pets />,
       },

@@ -2,13 +2,18 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import LoaderSpinner from "../../../components/LoaderSpinner/LoaderSpinner";
 import PetCard from "../PetCard/PetCard";
+import { useParams } from "react-router-dom";
 
 function Pets() {
   const axiosPublic = useAxiosPublic();
+  const params = useParams();
+  console.log(params);
   const { data: pets, isLoading } = useQuery({
     queryKey: ["pets"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/pets");
+      const res = await axiosPublic.get(
+        `/pets?category=${params?.category || undefined}`
+      );
       return res.data;
     },
   });
