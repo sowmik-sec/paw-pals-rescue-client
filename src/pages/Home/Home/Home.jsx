@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import Banner from "../Banner/Banner";
 import PetCategories from "../PetCategories/PetCategories";
+import CallToAction from "../CallToAction/CallToAction";
 
 function Home() {
   return (
@@ -10,6 +11,7 @@ function Home() {
       </Helmet>
       <Banner />
       <PetCategories />
+      <CallToAction />
     </div>
   );
 }
