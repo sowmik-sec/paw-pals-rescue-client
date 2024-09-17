@@ -9,32 +9,63 @@ function Pets() {
   const axiosPublic = useAxiosPublic();
   let params = useParams();
   const navigate = useNavigate();
+  const [searchTest, setSearchTest] = useState("");
   const [category, setCategory] = useState(params?.category || "all");
-  console.log(category);
   const {
     data: pets,
     refetch,
     isLoading,
     isFetching,
+    isError,
   } = useQuery({
     queryKey: ["pets", category],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/pets?category=${category || "all"}`);
+      const res = await axiosPublic.get(`/pets?category=${category}`);
       return res.data;
     },
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchOnReconnect: false,
   });
+  const [filteredPets, setFilteredPets] = useState([]);
 
   useEffect(() => {
-    refetch();
-    if (category !== params?.category) {
-      navigate(`/pets/${category}`, { replace: true });
+    if (!params.category) {
+      setCategory("all");
+      refetch();
+    } else {
+      setCategory(params.category);
     }
-  }, [category, refetch, navigate, params?.category]);
+  }, [params, refetch]);
+  useEffect(() => {
+    if (searchTest) {
+      const result = pets.filter((pet) =>
+        pet?.pet_name?.toLowerCase()?.includes(searchTest.toLowerCase())
+      );
+      setFilteredPets(result);
+    } else {
+      setFilteredPets(pets);
+    }
+  }, [pets, searchTest]);
+
+  const handleCategoryChange = (newCategory) => {
+    setCategory(newCategory);
+    if (newCategory === "all") {
+      navigate("/pets", { replace: true });
+    } else {
+      navigate(`/pets/${newCategory}`, { replace: true });
+    }
+  };
+
   if (isLoading || isFetching) {
     return <LoaderSpinner />;
+  }
+  if (isError) {
+    return (
+      <h2 className="text-4xl font-bold text-red-600">
+        Something went wrong while retching data
+      </h2>
+    );
   }
   return (
     <div>
@@ -42,6 +73,7 @@ function Pets() {
         <div className="flex justify-center my-5">
           <div className="lg:flex">
             <input
+              onChange={(e) => setSearchTest(e.target.value)}
               type="text"
               placeholder="Type here"
               className="input input-bordered mr-3 w-full max-w-xs"
@@ -55,19 +87,27 @@ function Pets() {
                 className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
               >
                 <li>
-                  <button onClick={() => setCategory("all")}>All</button>
+                  <button onClick={() => handleCategoryChange("all")}>
+                    All
+                  </button>
                 </li>
                 <li>
-                  <button onClick={() => setCategory("dog")}>Dog</button>
+                  <button onClick={() => handleCategoryChange("dog")}>
+                    Dog
+                  </button>
                 </li>
                 <li>
-                  <button onClick={() => setCategory("cat")}>Cat</button>
+                  <button onClick={() => handleCategoryChange("cat")}>
+                    Cat
+                  </button>
                 </li>
                 <li>
-                  <button onClick={() => setCategory("bird")}>Bird</button>
+                  <button onClick={() => handleCategoryChange("bird")}>
+                    Bird
+                  </button>
                 </li>
                 <li>
-                  <button onClick={() => setCategory("small pet")}>
+                  <button onClick={() => handleCategoryChange("small pet")}>
                     Small Pet
                   </button>
                 </li>
@@ -82,7 +122,7 @@ function Pets() {
         </div>
       </div>
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {pets.map((pet) => (
+        {filteredPets?.map((pet) => (
           <PetCard key={pet._id} pet={pet} />
         ))}
       </div>
