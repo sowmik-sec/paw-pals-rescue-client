@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function PetCard({ pet }) {
   return (
     <div className="card bg-base-100 w-96 shadow-xl">
@@ -15,9 +17,12 @@ function PetCard({ pet }) {
           <div className="badge badge-outline">{pet.pet_location}</div>
           <div className="badge badge-outline">{pet.posted_date}</div>
         </div>
-        <button className="btn btn-outline bg-orange-500 text-white w-1/2 mx-auto mt-5 border-t-0 border-x-0">
-          Request Adoption
-        </button>
+        <Link
+          to={`/pets/details/${pet._id}`}
+          className="btn btn-outline bg-orange-500 text-white w-1/2 mx-auto mt-5 border-t-0 border-x-0"
+        >
+          View Details
+        </Link>
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import Signup from "../pages/auth/Signup/Signup";
 import NotFound from "../pages/NotFound/NotFound";
 import PetStoryPage from "../pages/Home/SuccessStories/PetStoryPage";
 import Pets from "../pages/Pets/Pets/Pets";
+import PetDetails from "../pages/Pets/PetDetails/PetDetails";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: `/pets`,
         element: <Pets />,
+      },
+      {
+        path: "/pets/details/:id",
+        element: <PetDetails />,
       },
     ],
   },
