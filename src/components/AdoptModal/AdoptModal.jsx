@@ -1,11 +1,13 @@
 import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 function AdoptModal({ petDetails }) {
   const { user } = useAuth();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
-
+  const axiosPublic = useAxiosPublic();
   const {
     pet_name,
     pet_image,
@@ -16,9 +18,31 @@ function AdoptModal({ petDetails }) {
     owner_info,
   } = petDetails;
 
-  const handleAdopt = () => {
-    // Add logic to handle the adoption process
-    alert(`Congrats! You adopted ${pet_name}`);
+  const handleAdopt = (e) => {
+    e.preventDefault();
+
+    const adoptInfo = {
+      requester_id: user.uid,
+      pet_id: petDetails._id,
+      request_date: new Date(),
+      status: "pending",
+      requester_info: {
+        phone: phoneNumber,
+        address: address,
+      },
+    };
+    axiosPublic.post("/pet-request", adoptInfo).then((res) => {
+      if (res.data.insertedId) {
+        document.getElementById("my_modal_5").close();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Your request has been sent",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
   };
 
   return (
@@ -60,35 +84,36 @@ function AdoptModal({ petDetails }) {
             <p className="text-sm text-gray-500">
               <strong>Email:</strong> {user?.email || "No Email Provided"}
             </p>
-            <label className="block mt-2">
-              <strong>Phone Number:</strong>
-              <input
-                type="text"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                placeholder="Enter your phone number"
-                className="input input-bordered w-full mt-1"
-              />
-            </label>
-            <label className="block mt-2">
-              <strong>Address:</strong>
-              <input
-                type="text"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                placeholder="Enter your phone number"
-                className="input input-bordered w-full mt-1"
-              />
-            </label>
+            <form onSubmit={handleAdopt}>
+              <label className="block mt-2">
+                <strong>Phone Number:</strong>
+                <input
+                  required
+                  type="text"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder="Enter your phone number"
+                  className="input input-bordered w-full mt-1"
+                />
+              </label>
+              <label className="block mt-2">
+                <strong>Address:</strong>
+                <input
+                  required
+                  type="text"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="Full address"
+                  className="input input-bordered w-full mt-1"
+                />
+              </label>
+              <button className="btn btn-primary border-0 text-white bg-orange-500 hover:bg-orange-800 w-full py-3 font-bold">
+                Request Adoption
+              </button>
+            </form>
           </div>
 
           {/* Adoption Confirmation */}
-          <button
-            className="btn btn-primary border-0 text-white bg-orange-500 hover:bg-orange-800 w-full py-3 font-bold"
-            onClick={handleAdopt}
-          >
-            Request Adoption
-          </button>
         </div>
       </div>
     </dialog>
