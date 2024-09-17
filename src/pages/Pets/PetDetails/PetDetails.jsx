@@ -1,22 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import LoaderSpinner from "../../../components/LoaderSpinner/LoaderSpinner";
+import AdoptModal from "../../../components/AdoptModal/AdoptModal";
+import usePetDetails from "../../../hooks/usePetDetails";
 
 function PetDetails() {
   const params = useParams();
-  const axiosPublic = useAxiosPublic();
-  const {
-    data: petDetails,
-    isLoading,
-    isFetching,
-  } = useQuery({
-    queryKey: ["petDetails", params.id],
-    queryFn: async () => {
-      const res = await axiosPublic.get(`/pets/details/${params.id}`);
-      return res.data;
-    },
-  });
+  const { petDetails, isLoading, isFetching } = usePetDetails(params.id);
   if (isLoading || isFetching) {
     return <LoaderSpinner />;
   }
@@ -31,6 +20,7 @@ function PetDetails() {
   } = petDetails;
   return (
     <div className="max-w-4xl mx-auto p-5 mt-10 shadow-lg rounded-lg">
+      <AdoptModal petDetails={petDetails} />
       {/* Pet Image */}
       <div className="flex justify-center">
         <img
@@ -72,7 +62,10 @@ function PetDetails() {
 
       {/* Call to Action */}
       <div className="flex justify-center mt-10">
-        <button className="btn btn-outline hover:bg-orange-700 border-0 text-white bg-orange-500 px-6 py-3 text-lg rounded-lg">
+        <button
+          onClick={() => document.getElementById("my_modal_5").showModal()}
+          className="btn btn-outline hover:bg-orange-700 border-0 text-white bg-orange-500 px-6 py-3 text-lg rounded-lg"
+        >
           Adopt {pet_name}
         </button>
       </div>
