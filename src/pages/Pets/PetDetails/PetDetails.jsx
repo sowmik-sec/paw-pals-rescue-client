@@ -18,6 +18,7 @@ function PetDetails() {
     posted_date,
     pet_description,
     owner_info,
+    requestDetails,
   } = petDetails;
   return (
     <div className="max-w-4xl mx-auto p-5 mt-10 shadow-lg rounded-lg">
@@ -49,14 +50,28 @@ function PetDetails() {
         </div>
         <div>
           <h3 className="text-lg font-semibold">Current Owner</h3>
-          <p className="text-md">{owner_info.name}</p>
-          <p className="text-md">{owner_info.email}</p>
+          <p className="text-md">{owner_info?.name}</p>
+          <p className="text-md">{owner_info?.email}</p>
         </div>
         <div>
           <h3 className="text-lg font-semibold">Posted Date</h3>
           <p className="text-md">
             {new Date(posted_date).toLocaleDateString()}
           </p>
+        </div>
+        <div>
+          <h3 className="text-lg font-semibold">Adoption Status</h3>
+          <div
+            className={`text-md w-24 text-center px-2 py-1 rounded-md text-black ${
+              requestDetails.status === "pending"
+                ? "bg-violet-300"
+                : requestDetails.status === "adopted"
+                ? "bg-green-400"
+                : ""
+            }`}
+          >
+            <p>{requestDetails.status}</p>
+          </div>
         </div>
       </div>
 
