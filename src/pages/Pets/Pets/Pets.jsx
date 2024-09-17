@@ -69,7 +69,7 @@ function Pets() {
   }
   return (
     <div>
-      <div>
+      <div className="sticky top-0 z-10 bg-gray-700 mb-10 shadow-md w-[450px] mx-auto rounded-md p-2">
         <div className="flex justify-center my-5">
           <div className="lg:flex">
             <input
