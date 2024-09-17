@@ -17,6 +17,7 @@ function PetDetails() {
     pet_location,
     posted_date,
     pet_description,
+    owner_info,
   } = petDetails;
   return (
     <div className="max-w-4xl mx-auto p-5 mt-10 shadow-lg rounded-lg">
@@ -45,6 +46,11 @@ function PetDetails() {
         <div>
           <h3 className="text-lg font-semibold">Location</h3>
           <p className="text-md">{pet_location}</p>
+        </div>
+        <div>
+          <h3 className="text-lg font-semibold">Current Owner</h3>
+          <p className="text-md">{owner_info.name}</p>
+          <p className="text-md">{owner_info.email}</p>
         </div>
         <div>
           <h3 className="text-lg font-semibold">Posted Date</h3>

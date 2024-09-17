@@ -13,6 +13,7 @@ function AdoptModal({ petDetails }) {
     pet_age,
     pet_location,
     pet_description,
+    owner_info,
   } = petDetails;
 
   const handleAdopt = () => {
@@ -46,7 +47,11 @@ function AdoptModal({ petDetails }) {
           </p>
           <p className="text-gray-500">{pet_location}</p>
           <p className="py-4 text-gray-700">{pet_description}</p>
-
+          <div>
+            <h3 className="text-lg font-semibold">Current Owner</h3>
+            <p className="text-md">{owner_info.name}</p>
+            <p className="text-md">{owner_info.email}</p>
+          </div>
           {/* User Information */}
           <div className="w-full text-left my-4">
             <p className="text-sm text-gray-500">
