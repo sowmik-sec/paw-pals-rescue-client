@@ -91,6 +91,7 @@ function Pets() {
       </h2>
     );
   }
+
   return (
     <div>
       <div className="sticky top-0 z-10 bg-gray-700 mb-10 shadow-md w-[450px] mx-auto rounded-md p-2">
@@ -145,6 +146,11 @@ function Pets() {
           </h2>
         </div>
       </div>
+      {filteredPets.length === 0 && (
+        <h2 className="text-center my-5 text-red-400 font-bold">
+          No Pet found
+        </h2>
+      )}
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {filteredPets?.map((pet) => (
           <PetCard key={pet._id} pet={pet} />
