@@ -63,14 +63,14 @@ function PetDetails() {
           <h3 className="text-lg font-semibold">Adoption Status</h3>
           <div
             className={`text-md w-24 text-center px-2 py-1 rounded-md text-black ${
-              requestDetails.status === "pending"
+              requestDetails?.status === "pending"
                 ? "bg-violet-300"
-                : requestDetails.status === "adopted"
-                ? "bg-green-400"
-                : ""
+                : requestDetails?.status === "adopted"
+                ? "bg-purple-500"
+                : "bg-green-500 text-white"
             }`}
           >
-            <p>{requestDetails.status}</p>
+            <p>{requestDetails?.status || "available"}</p>
           </div>
         </div>
       </div>
