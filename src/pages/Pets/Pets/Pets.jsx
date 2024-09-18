@@ -1,9 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import LoaderSpinner from "../../../components/LoaderSpinner/LoaderSpinner";
 import PetCard from "../PetCard/PetCard";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 
 function Pets() {
   const axiosPublic = useAxiosPublic();
@@ -11,17 +12,26 @@ function Pets() {
   const navigate = useNavigate();
   const [searchTest, setSearchTest] = useState("");
   const [category, setCategory] = useState(params?.category || "all");
+  const limit = 10;
   const {
-    data: pets,
-    refetch,
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
     isLoading,
-    isFetching,
     isError,
-  } = useQuery({
+  } = useInfiniteQuery({
     queryKey: ["pets", category],
-    queryFn: async () => {
-      const res = await axiosPublic.get(`/pets?category=${category}`);
+    queryFn: async ({ pageParam = 1 }) => {
+      const res = await axiosPublic.get(
+        `/pets?category=${category}&page=${pageParam}&limit=${limit}`
+      );
       return res.data;
+    },
+    getNextPageParam: (lastPage) => {
+      return lastPage.currentPage < lastPage.totalPages
+        ? lastPage.currentPage + 1
+        : undefined;
     },
     refetchOnWindowFocus: false,
     refetchOnMount: false,
@@ -29,24 +39,28 @@ function Pets() {
   });
   const [filteredPets, setFilteredPets] = useState([]);
 
-  useEffect(() => {
-    if (!params.category) {
-      setCategory("all");
-      refetch();
-    } else {
-      setCategory(params.category);
-    }
-  }, [params, refetch]);
+  // useEffect(() => {
+  //   if (!params.category) {
+  //     setCategory("all");
+  //     refetch();
+  //   } else {
+  //     setCategory(params.category);
+  //   }
+  // }, [params, refetch]);
+
+  // handle search and category changes
   useEffect(() => {
     if (searchTest) {
-      const result = pets.filter((pet) =>
-        pet?.pet_name?.toLowerCase()?.includes(searchTest.toLowerCase())
-      );
+      const result = data?.pages
+        .flatMap((page) => page.pets)
+        .filter((pet) =>
+          pet?.pet_name?.toLowerCase()?.includes(searchTest.toLowerCase())
+        );
       setFilteredPets(result);
     } else {
-      setFilteredPets(pets);
+      setFilteredPets(data?.pages.flatMap((page) => page.pets));
     }
-  }, [pets, searchTest]);
+  }, [data, searchTest]);
 
   const handleCategoryChange = (newCategory) => {
     setCategory(newCategory);
@@ -57,7 +71,17 @@ function Pets() {
     }
   };
 
-  if (isLoading || isFetching) {
+  const { ref: loadMoreRef, inView } = useInView({
+    threshold: 1,
+  });
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage]);
+
+  if (isLoading) {
     return <LoaderSpinner />;
   }
   if (isError) {
@@ -126,6 +150,7 @@ function Pets() {
           <PetCard key={pet._id} pet={pet} />
         ))}
       </div>
+      <div ref={loadMoreRef}>{isFetchingNextPage && <LoaderSpinner />}</div>
     </div>
   );
 }
