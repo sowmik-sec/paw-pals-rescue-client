@@ -9,6 +9,7 @@ import NotFound from "../pages/NotFound/NotFound";
 import PetStoryPage from "../pages/Home/SuccessStories/PetStoryPage";
 import Pets from "../pages/Pets/Pets/Pets";
 import PetDetails from "../pages/Pets/PetDetails/PetDetails";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -34,26 +35,46 @@ const router = createBrowserRouter([
       },
       {
         path: `/pets/:category`,
-        element: <Pets />,
+        element: (
+          <PrivateRoute>
+            <Pets />
+          </PrivateRoute>
+        ),
       },
       {
         path: `/pets`,
-        element: <Pets />,
+        element: (
+          <PrivateRoute>
+            <Pets />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/pets/details/:id",
-        element: <PetDetails />,
+        element: (
+          <PrivateRoute>
+            <PetDetails />
+          </PrivateRoute>
+        ),
       },
     ],
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     errorElement: <NotFound />,
     children: [
       {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
       },
     ],
   },
