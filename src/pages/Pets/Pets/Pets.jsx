@@ -146,7 +146,7 @@ function Pets() {
           </h2>
         </div>
       </div>
-      {filteredPets.length === 0 && (
+      {filteredPets?.length === 0 && (
         <h2 className="text-center my-5 text-red-400 font-bold">
           No Pet found
         </h2>
