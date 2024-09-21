@@ -132,6 +132,11 @@ function Pets() {
                   </button>
                 </li>
                 <li>
+                  <button onClick={() => handleCategoryChange("fish")}>
+                    Fish
+                  </button>
+                </li>
+                <li>
                   <button onClick={() => handleCategoryChange("small pet")}>
                     Small Pet
                   </button>
