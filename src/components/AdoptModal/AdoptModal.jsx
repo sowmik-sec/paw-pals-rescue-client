@@ -3,7 +3,7 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 
-function AdoptModal({ petDetails }) {
+function AdoptModal({ petDetails, refetch }) {
   const { user } = useAuth();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
@@ -41,6 +41,7 @@ function AdoptModal({ petDetails }) {
           showConfirmButton: false,
           timer: 1500,
         });
+        refetch();
       }
     });
   };

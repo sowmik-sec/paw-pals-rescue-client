@@ -7,7 +7,9 @@ import useAuth from "../../../hooks/useAuth";
 function PetDetails() {
   const params = useParams();
   const { user } = useAuth();
-  const { petDetails, isLoading, isFetching } = usePetDetails(params.id);
+  const { petDetails, isLoading, isFetching, refetch } = usePetDetails(
+    params.id
+  );
   if (isLoading || isFetching) {
     return <LoaderSpinner />;
   }
@@ -24,7 +26,7 @@ function PetDetails() {
   } = petDetails;
   return (
     <div className="max-w-4xl mx-auto p-5 mt-10 shadow-lg rounded-lg">
-      <AdoptModal petDetails={petDetails} />
+      <AdoptModal petDetails={petDetails} refetch={refetch} />
       {/* Pet Image */}
       <div className="flex justify-center">
         <img
@@ -86,7 +88,7 @@ function PetDetails() {
       {/* Call to Action */}
       <div className="flex justify-center mt-10">
         <button
-          disabled={user?.email === owner_info.email}
+          disabled={user?.email === owner_info.email || requestDetails?.status}
           onClick={() => document.getElementById("my_modal_5").showModal()}
           className="btn btn-outline hover:bg-orange-700 border-0 text-white bg-orange-500 px-6 py-3 text-lg rounded-lg"
         >
