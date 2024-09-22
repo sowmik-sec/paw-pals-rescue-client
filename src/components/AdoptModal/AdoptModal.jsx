@@ -8,6 +8,9 @@ function AdoptModal({ petDetails, refetch }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const axiosPublic = useAxiosPublic();
+  const date = new Date();
+  const formattedDate =
+    date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
   const {
     pet_name,
     pet_image,
@@ -24,7 +27,7 @@ function AdoptModal({ petDetails, refetch }) {
     const adoptInfo = {
       requester_id: user.uid,
       pet_id: petDetails._id,
-      request_date: new Date(),
+      request_date: formattedDate,
       status: "pending",
       requester_info: {
         phone: phoneNumber,

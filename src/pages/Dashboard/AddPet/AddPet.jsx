@@ -25,7 +25,9 @@ function AddPet() {
         name: user?.displayName,
         email: user?.email,
       };
-
+      const date = new Date();
+      const formattedDate =
+        date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
       // Create a new FormData instance
       const formData = new FormData();
       formData.append("pet_name", data.pet_name);
@@ -34,7 +36,7 @@ function AddPet() {
       formData.append("pet_location", data.pet_location);
       formData.append("pet_description", data.pet_description);
       formData.append("owner_info", JSON.stringify(owner_info));
-      formData.append("posted_date", new Date().toISOString()); // You can set posted_date here if needed
+      formData.append("posted_date", formattedDate); // You can set posted_date here if needed
 
       // Append the image file to FormData
       formData.append("pet_image", data.pet_image[0]);
