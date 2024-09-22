@@ -2,9 +2,11 @@ import { useParams } from "react-router-dom";
 import LoaderSpinner from "../../../components/LoaderSpinner/LoaderSpinner";
 import AdoptModal from "../../../components/AdoptModal/AdoptModal";
 import usePetDetails from "../../../hooks/usePetDetails";
+import useAuth from "../../../hooks/useAuth";
 
 function PetDetails() {
   const params = useParams();
+  const { user } = useAuth();
   const { petDetails, isLoading, isFetching } = usePetDetails(params.id);
   if (isLoading || isFetching) {
     return <LoaderSpinner />;
@@ -84,6 +86,7 @@ function PetDetails() {
       {/* Call to Action */}
       <div className="flex justify-center mt-10">
         <button
+          disabled={user?.email === owner_info.email}
           onClick={() => document.getElementById("my_modal_5").showModal()}
           className="btn btn-outline hover:bg-orange-700 border-0 text-white bg-orange-500 px-6 py-3 text-lg rounded-lg"
         >
