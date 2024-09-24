@@ -1,5 +1,11 @@
+import { useNavigate } from "react-router-dom";
+
 function MyAddedPetsRow({ pet, index, handleMarkAsAdopted, handleDeletePet }) {
   console.log(pet);
+  const navigate = useNavigate();
+  const handleUpdate = (id) => {
+    navigate(`/dashboard/update-pet/${id}`);
+  };
   return (
     <tr>
       <th>
@@ -25,6 +31,7 @@ function MyAddedPetsRow({ pet, index, handleMarkAsAdopted, handleDeletePet }) {
       </td>
       <td>
         <button
+          onClick={() => handleUpdate(pet._id)}
           disabled={pet?.requestDetails?.status}
           className="btn btn-primary"
         >
