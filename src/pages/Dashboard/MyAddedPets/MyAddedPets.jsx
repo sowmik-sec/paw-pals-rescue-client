@@ -88,8 +88,8 @@ function MyAddedPets() {
                 <h2 className="text-3xl">#</h2>
               </label>
             </th>
-            <th>Name</th>
-            <th>Job</th>
+            <th>Pet</th>
+            <th>Status</th>
             <th>Update</th>
             <th>Mark as Adopted</th>
             <th>Delete</th>
