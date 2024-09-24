@@ -35,13 +35,14 @@ function MyAddedPets() {
         axiosSecure
           .patch(`/make-adopted/${id}`)
           .then((res) => {
-            console.log(res);
-            Swal.fire({
-              title: "Thank you",
-              text: "You made it adopted.",
-              icon: "success",
-            });
-            refetch();
+            if (res.data?.acknowledged) {
+              Swal.fire({
+                title: "Thank you",
+                text: "You made it adopted.",
+                icon: "success",
+              });
+              refetch();
+            }
           })
           .catch((err) => console.error(err));
       }
