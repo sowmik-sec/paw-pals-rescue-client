@@ -1,21 +1,43 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import usePetDetails from "../../../hooks/usePetDetails";
+import LoaderSpinner from "../../../components/LoaderSpinner/LoaderSpinner";
 
 function AddPet() {
-  const [selectedOption, setSelectedOption] = useState(null);
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const params = useParams();
+
+  const { petDetails, isLoading: petLoading } = usePetDetails(params.id); // Fetch pet details if updating
+  const [selectedOption, setSelectedOption] = useState(null); // Selected category
+
   const {
     register,
     handleSubmit,
+    setValue, // To programmatically set values
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    // Set default values if updating an existing pet
+    if (petDetails) {
+      setValue("pet_name", petDetails.pet_name);
+      setValue("pet_age", petDetails.pet_age);
+      setValue("pet_location", petDetails.pet_location);
+      setValue("pet_description", petDetails.pet_description);
+      setSelectedOption({
+        value: petDetails.pet_category,
+        label: petDetails.pet_category,
+      });
+    }
+  }, [petDetails, setValue]);
+
   const onSubmit = async (data) => {
     try {
       // Convert selected option to include in the form data
@@ -26,8 +48,10 @@ function AddPet() {
         email: user?.email,
       };
       const date = new Date();
-      const formattedDate =
-        date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+      const formattedDate = `${date.getFullYear()}-${
+        date.getMonth() + 1
+      }-${date.getDate()}`;
+
       // Create a new FormData instance
       const formData = new FormData();
       formData.append("pet_name", data.pet_name);
@@ -36,28 +60,35 @@ function AddPet() {
       formData.append("pet_location", data.pet_location);
       formData.append("pet_description", data.pet_description);
       formData.append("owner_info", JSON.stringify(owner_info));
-      formData.append("posted_date", formattedDate); // You can set posted_date here if needed
+      formData.append("posted_date", formattedDate); // Set posted date here
 
-      // Append the image file to FormData
-      formData.append("pet_image", data.pet_image[0]);
+      // Append the image file if it's a new upload or if not updating
+      if (data.pet_image && data.pet_image[0]) {
+        formData.append("pet_image", data.pet_image[0]);
+      }
 
-      // Send the form data to the backend using Axios
-      const response = await axiosSecure.post("/add-pet", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      if (response.data?.insertedId) {
+      // Determine if adding a new pet or updating an existing pet
+      let response;
+      if (params.id) {
+        // Update existing pet
+        response = await axiosSecure.put(`/update-pet/${params.id}`, formData);
+      } else {
+        // Add new pet
+        response = await axiosSecure.post("/add-pet", formData);
+      }
+
+      if (response.data?.insertedId || response.data?.modifiedCount > 0) {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Pet added successfully",
+          title: params.id
+            ? "Pet updated successfully"
+            : "Pet added successfully",
           showConfirmButton: false,
           timer: 1500,
         });
         navigate("/dashboard/my-added-pets");
       }
-      console.log("Response from server:", response.data);
     } catch (error) {
       console.error("Error uploading pet data:", error);
     }
@@ -70,6 +101,10 @@ function AddPet() {
     { value: "fish", label: "Fish" },
     { value: "small pet", label: "Small Pet" },
   ];
+
+  if (petLoading) {
+    return <LoaderSpinner />; // Loading indicator while fetching pet details
+  }
 
   return (
     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
@@ -112,7 +147,7 @@ function AddPet() {
             <span className="label-text">Category</span>
           </label>
           <Select
-            defaultValue={selectedOption}
+            value={selectedOption}
             onChange={setSelectedOption}
             options={options}
             placeholder="Select pet category"
@@ -160,7 +195,7 @@ function AddPet() {
           </label>
           <input
             type="file"
-            {...register("pet_image", { required: true })}
+            {...register("pet_image", !params.id ? { required: true } : {})} // Make image optional for updates
             className="file-input w-full max-w-xs"
           />
           {errors.pet_image && (
@@ -170,7 +205,9 @@ function AddPet() {
 
         {/* Submit Button */}
         <div className="form-control mt-6">
-          <button className="btn btn-primary">Add Pet</button>
+          <button className="btn btn-primary">
+            {params.id ? "Update Pet" : "Add Pet"}
+          </button>
         </div>
       </form>
     </div>
