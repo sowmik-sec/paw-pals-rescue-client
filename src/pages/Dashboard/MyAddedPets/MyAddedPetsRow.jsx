@@ -1,4 +1,4 @@
-function MyAddedPetsRow({ pet, index }) {
+function MyAddedPetsRow({ pet, index, handleMarkAsAdopted }) {
   console.log(pet);
   return (
     <tr>
@@ -24,18 +24,32 @@ function MyAddedPetsRow({ pet, index }) {
           : pet?.requestDetails?.status}
       </td>
       <td>
-        <button className="btn btn-primary">Update</button>
+        <button
+          disabled={pet?.requestDetails?.status}
+          className="btn btn-primary"
+        >
+          Update
+        </button>
       </td>
       <td>
         <button
           className="btn btn-success"
-          disabled={!pet?.requestDetails?.status}
+          disabled={
+            !pet?.requestDetails?.status ||
+            pet?.requestDetails?.status === "adopted"
+          }
+          onClick={() => handleMarkAsAdopted(pet._id)}
         >
           Mark as Adopted
         </button>
       </td>
       <td>
-        <button className="btn btn-error">Delete</button>
+        <button
+          className="btn btn-error"
+          disabled={pet?.requestDetails?.status === "adopted"}
+        >
+          Delete
+        </button>
       </td>
     </tr>
   );
