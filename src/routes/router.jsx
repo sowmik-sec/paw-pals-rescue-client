@@ -123,7 +123,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/my-donation-campaign",
+        path: "/dashboard/my-donation-campaigns",
         element: (
           <PrivateRoute>
             <MyDonationCampaign />
