@@ -3,6 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import LoaderSpinner from "../../components/LoaderSpinner/LoaderSpinner";
 import useAuth from "../../hooks/useAuth";
+import DonateModal from "../../components/DonateModal/DonateModal";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_PK);
 
 function DonationDetails() {
   const { id } = useParams(); // Assuming you are passing donation ID through the route
@@ -34,6 +39,9 @@ function DonationDetails() {
 
   return (
     <div className="container mx-auto p-5 md:p-10">
+      <Elements stripe={stripePromise}>
+        <DonateModal />
+      </Elements>
       <div className="max-w-4xl mx-auto shadow-lg rounded-lg overflow-hidden">
         {/* Pet Image */}
         <img
@@ -87,6 +95,9 @@ function DonationDetails() {
           <div className="mt-10 flex justify-center">
             <button
               disabled={creator?.email === user?.email}
+              onClick={() =>
+                document.getElementById("donate-modal").showModal()
+              }
               className="btn btn-primary text-white bg-orange-500 hover:bg-orange-700 border-x-0 border-t-0 px-6 py-2 text-lg"
             >
               Donate Now
