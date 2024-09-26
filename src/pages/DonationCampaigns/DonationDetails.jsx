@@ -2,10 +2,12 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import LoaderSpinner from "../../components/LoaderSpinner/LoaderSpinner";
+import useAuth from "../../hooks/useAuth";
 
 function DonationDetails() {
   const { id } = useParams(); // Assuming you are passing donation ID through the route
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
 
   const { data: donationDetails, isLoading } = useQuery({
     queryKey: ["donationDetails", id],
@@ -83,7 +85,10 @@ function DonationDetails() {
 
           {/* Donate Button */}
           <div className="mt-10 flex justify-center">
-            <button className="btn btn-primary px-6 py-2 text-lg">
+            <button
+              disabled={creator?.email === user?.email}
+              className="btn btn-primary text-white bg-orange-500 hover:bg-orange-700 border-x-0 border-t-0 px-6 py-2 text-lg"
+            >
               Donate Now
             </button>
           </div>
