@@ -74,7 +74,7 @@ function MyAddedPets() {
     });
   };
 
-  if (myPets.length === 0) {
+  if (myPets?.length === 0) {
     return <h2 className="text-4xl font-bold">You did not add any pets</h2>;
   }
 
