@@ -1,5 +1,5 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
@@ -17,10 +17,23 @@ function DonateModal({ pet }) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [donationAmount, setDonationAmount] = useState(0);
+  const [availableDonation, setAvailableDonation] = useState(max_donation); // Remaining donation amount
+
+  // Fetch the total donations for the pet
+  useEffect(() => {
+    axiosSecure
+      .get(`/donations/total/${_id}`) // Endpoint to get total donations for the pet
+      .then((res) => {
+        const totalDonations = res.data.totalDonations || 0;
+        const remainingDonation = max_donation - totalDonations;
+        setAvailableDonation(remainingDonation > 0 ? remainingDonation : 0); // Ensure non-negative value
+      })
+      .catch((err) => console.error("Error fetching total donations:", err));
+  }, [axiosSecure, _id, max_donation]);
 
   // Debounce the API call to reduce unnecessary hits
   const handleDonationChange = debounce((value) => {
-    if (value > 0 && value <= max_donation) {
+    if (value > 0 && value <= availableDonation) {
       axiosSecure
         .post("/create-donation-intent", {
           donation: value,
@@ -111,7 +124,9 @@ function DonateModal({ pet }) {
     <dialog id="donate-modal" className="modal modal-bottom sm:modal-middle">
       <div className="modal-box">
         <form onSubmit={handleSubmit}>
-          <h3 className="text-2xl">Max donation amount: {max_donation}</h3>
+          <h3 className="text-2xl">
+            Max donation amount: {max_donation}, Available: {availableDonation}
+          </h3>
           <label className="label">
             <span className="label-text">Donation Amount</span>
           </label>
@@ -121,11 +136,11 @@ function DonateModal({ pet }) {
             placeholder="Enter donation amount"
             className="input input-bordered w-full mb-3"
             min="1"
-            max={max_donation}
+            max={availableDonation}
           />
-          {donationAmount > max_donation && (
+          {donationAmount > availableDonation && (
             <h3 className="text-red-600">
-              Donation must be less than or equal to {max_donation}
+              Donation must be less than or equal to {availableDonation}
             </h3>
           )}
           <CardElement
@@ -151,7 +166,7 @@ function DonateModal({ pet }) {
                 !stripe ||
                 !clientSecret ||
                 donationAmount <= 0 ||
-                donationAmount > max_donation
+                donationAmount > availableDonation
               }
               className="btn btn-primary my-4 bg-yellow-400 hover:bg-yellow-700"
             >
