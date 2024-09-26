@@ -40,7 +40,7 @@ function DonationDetails() {
   return (
     <div className="container mx-auto p-5 md:p-10">
       <Elements stripe={stripePromise}>
-        <DonateModal />
+        <DonateModal pet={donationDetails} />
       </Elements>
       <div className="max-w-4xl mx-auto shadow-lg rounded-lg overflow-hidden">
         {/* Pet Image */}
