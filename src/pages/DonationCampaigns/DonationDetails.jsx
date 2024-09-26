@@ -35,6 +35,7 @@ function DonationDetails() {
     last_date,
     donation_created_at,
     creator_info: creator,
+    totalAmount,
   } = donationDetails || {};
 
   return (
@@ -63,6 +64,12 @@ function DonationDetails() {
               <p className="text-lg font-semibold">Maximum Donation:</p>
               <p className="text-xl font-bold text-orange-500">
                 ${max_donation}
+              </p>
+            </div>
+            <div>
+              <p className="text-lg font-semibold">Total Received Donation:</p>
+              <p className="text-xl font-bold text-orange-500">
+                ${totalAmount}
               </p>
             </div>
             <div>
