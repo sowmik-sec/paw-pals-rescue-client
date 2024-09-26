@@ -6,6 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import DonateModal from "../../components/DonateModal/DonateModal";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import useAdmin from "../../hooks/useAdmin";
 
 const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_PK);
 
@@ -13,6 +14,7 @@ function DonationDetails() {
   const { id } = useParams(); // Assuming you are passing donation ID through the route
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const [isAdmin, isAdminLoading] = useAdmin();
 
   const { data: donationDetails, isLoading } = useQuery({
     queryKey: ["donationDetails", id],
@@ -22,7 +24,7 @@ function DonationDetails() {
     },
   });
 
-  if (isLoading) {
+  if (isLoading || isAdminLoading) {
     return <LoaderSpinner />;
   }
 
@@ -112,6 +114,29 @@ function DonationDetails() {
           </div>
         </div>
       </div>
+      {isAdmin && (
+        <div className="mt-10">
+          <h3 className="text-lg font-semibold">Donor List</h3>
+          <ul className="mt-4">
+            {donationDetails?.donations?.map((donor, index) => (
+              <li key={index} className="flex justify-between border-b py-2">
+                <span>{donor._id || "Anonymous Donor"}</span>
+                <span>Total Donated: ${donor.totalDonation}</span>
+                <ul className="pl-4">
+                  {donor.donations.map((donation, idx) => (
+                    <li key={idx}>
+                      <span>
+                        ${donation.donation} on{" "}
+                        {new Date(donation.date).toLocaleDateString()}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
