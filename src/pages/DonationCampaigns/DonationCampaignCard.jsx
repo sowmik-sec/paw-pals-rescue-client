@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
 function DonationCampaignCard({ campaign }) {
-  const { pet_name, max_donation, last_date, pet_image } = campaign;
+  const { pet_name, max_donation, last_date, pet_image, totalAmount } =
+    campaign;
   const navigate = useNavigate();
   const handleDonationDetails = (id) => {
     navigate(`/donation-details/${id}`);
@@ -14,9 +15,12 @@ function DonationCampaignCard({ campaign }) {
       <div className="card-body">
         <h2 className="card-title">{pet_name}</h2>
         <p>If a dog chews shoes whose shoes does he choose?</p>
-        <div className="card-actions justify-end">
+        <div className="card-actions justify-items-start">
           <div className="badge badge-outline">
             Max donation: {max_donation}
+          </div>
+          <div className="badge badge-outline">
+            Total Donation Collected: ${totalAmount ? totalAmount : 0}
           </div>
           <div className="badge badge-outline">Last date: {last_date}</div>
         </div>
