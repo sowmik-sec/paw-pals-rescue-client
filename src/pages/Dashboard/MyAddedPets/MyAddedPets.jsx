@@ -74,6 +74,10 @@ function MyAddedPets() {
     });
   };
 
+  if (myPets.length === 0) {
+    return <h2 className="text-4xl font-bold">You did not add any pets</h2>;
+  }
+
   if (isLoading) {
     return <LoaderSpinner />;
   }
