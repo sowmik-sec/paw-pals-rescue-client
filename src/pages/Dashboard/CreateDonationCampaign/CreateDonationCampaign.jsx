@@ -19,7 +19,9 @@ function CreateDonationCampaign() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  const dateFormat = `${new Date().getFullYear()}-${
+    new Date().getMonth() + 1
+  }-${new Date().getDate()}`;
   const onSubmit = async (data) => {
     try {
       const formData = new FormData();
@@ -28,7 +30,7 @@ function CreateDonationCampaign() {
       formData.append("last_date", data.last_date);
       formData.append("short_description", data.short_description);
       formData.append("long_description", data.long_description);
-      formData.append("donation_created_at", new Date().toISOString());
+      formData.append("donation_created_at", dateFormat);
       formData.append("creator_info", JSON.stringify(creator_info));
       // Append image if selected
       if (imageFile) {
