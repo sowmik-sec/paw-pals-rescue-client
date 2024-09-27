@@ -27,10 +27,8 @@ function Login() {
   const axiosPublic = useAxiosPublic();
 
   const onSubmit = (data) => {
-    console.log(data);
     login(data.email, data.password)
-      .then((userCredential) => {
-        console.log(userCredential);
+      .then(() => {
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -69,7 +67,6 @@ function Login() {
   const handleGoogleLogin = () => {
     googleSignIn()
       .then((result) => {
-        console.log(result.user);
         const userInfo = {
           name: result.user.displayName,
           email: result.user.email,

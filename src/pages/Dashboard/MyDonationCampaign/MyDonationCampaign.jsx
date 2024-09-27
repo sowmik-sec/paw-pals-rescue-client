@@ -32,7 +32,6 @@ function MyDonationCampaign() {
   if (myCampaigns?.length === 0) {
     return <h3 className="text-3xl">You have no donation campaign.</h3>;
   }
-  console.log(myCampaigns);
   return (
     <div>
       <h2 className="text-4xl">My donation campaigns</h2>

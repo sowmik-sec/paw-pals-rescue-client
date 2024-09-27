@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
 function MyAddedPetsRow({ pet, index, handleMarkAsAdopted, handleDeletePet }) {
-  console.log(pet);
   const navigate = useNavigate();
   const handleUpdate = (id) => {
     navigate(`/dashboard/update-pet/${id}`);

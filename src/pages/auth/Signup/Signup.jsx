@@ -17,10 +17,8 @@ function Signup() {
   const axiosPublic = useAxiosPublic();
 
   const onSubmit = (data) => {
-    console.log(data);
     createUser(data.email, data.password)
       .then((userCredential) => {
-        console.log(userCredential);
         updateUser(data.name, data.photo)
           .then(() => {
             const userInfo = {

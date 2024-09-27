@@ -90,7 +90,6 @@ function DonateModal({ pet }) {
     if (confirmError) {
       console.log("confirm error");
     } else {
-      console.log("payment intent", paymentIntent);
       if (paymentIntent.status === "succeeded") {
         setTransactionId(paymentIntent.id);
         const payment = {
@@ -104,7 +103,6 @@ function DonateModal({ pet }) {
           status: "succeeded", // Update the status
         };
         const res = await axiosSecure.post("/donations", payment);
-        console.log(res);
         if (res.data?.donationResult?.insertedId) {
           Swal.fire({
             position: "top-end",
