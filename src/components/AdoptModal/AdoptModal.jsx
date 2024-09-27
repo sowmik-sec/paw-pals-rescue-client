@@ -1,13 +1,13 @@
 import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 function AdoptModal({ petDetails, refetch }) {
   const { user } = useAuth();
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   const date = new Date();
   const formattedDate =
     date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
@@ -34,7 +34,7 @@ function AdoptModal({ petDetails, refetch }) {
         address: address,
       },
     };
-    axiosPublic.post("/pet-request", adoptInfo).then((res) => {
+    axiosSecure.post("/pet-request", adoptInfo).then((res) => {
       if (res.data.insertedId) {
         document.getElementById("my_modal_5").close();
         Swal.fire({

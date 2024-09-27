@@ -1,13 +1,13 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import LoaderSpinner from "../../../components/LoaderSpinner/LoaderSpinner";
 import PetCard from "../PetCard/PetCard";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 function Pets() {
-  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
   let params = useParams();
   const navigate = useNavigate();
   const [searchTest, setSearchTest] = useState("");
@@ -23,7 +23,7 @@ function Pets() {
   } = useInfiniteQuery({
     queryKey: ["pets", category],
     queryFn: async ({ pageParam = 1 }) => {
-      const res = await axiosPublic.get(
+      const res = await axiosSecure.get(
         `/pets?category=${category}&page=${pageParam}&limit=${limit}`
       );
       return res.data;
