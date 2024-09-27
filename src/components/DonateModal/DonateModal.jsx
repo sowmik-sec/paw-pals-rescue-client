@@ -114,7 +114,7 @@ function DonateModal({ pet }) {
             timer: 1500,
           });
           document.getElementById("donate-modal").close();
-          navigate("/dashboard/my-donation");
+          navigate("/dashboard/my-donations");
         }
       }
     }

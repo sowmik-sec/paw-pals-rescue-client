@@ -57,7 +57,7 @@ function DashboardLayout() {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="my-donation">My Donation </NavLink>
+                  <NavLink to="my-donations">My Donations </NavLink>
                 </li>
               </>
             )}
