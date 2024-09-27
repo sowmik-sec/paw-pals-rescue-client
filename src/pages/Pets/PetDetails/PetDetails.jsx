@@ -36,7 +36,7 @@ function PetDetails() {
         <img
           src={pet_image}
           alt={pet_name}
-          className="w-full h-80 object-cover rounded-lg mb-6"
+          className="w-full h-full object-cover rounded-lg mb-6"
         />
       </div>
 

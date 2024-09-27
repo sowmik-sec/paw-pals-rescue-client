@@ -14,7 +14,7 @@ function DonationCampaignCard({ campaign }) {
     navigate(`/donation-details/${id}`);
   };
   return (
-    <div className="card bg-base-100 w-96 shadow-xl">
+    <div className="card bg-base-100 w-96 shadow-xl mx-auto">
       <figure>
         <img className="" src={pet_image} alt="pet image" />
       </figure>

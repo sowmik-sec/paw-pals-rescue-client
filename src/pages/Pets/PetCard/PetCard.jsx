@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function PetCard({ pet }) {
   return (
-    <div className="card bg-base-100 w-96 shadow-xl">
+    <div className="card bg-base-100 w-96 shadow-xl mx-auto">
       <figure>
         <img src={pet.pet_image} className="w-full h-64" alt="Shoes" />
       </figure>

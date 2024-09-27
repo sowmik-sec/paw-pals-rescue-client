@@ -54,7 +54,7 @@ function DonationDetails() {
         <img
           src={pet_image}
           alt={pet_name}
-          className="w-full h-60 object-cover md:h-80"
+          className="w-full h-full object-cover rounded-lg mb-6"
         />
 
         <div className="p-6 md:p-8">
