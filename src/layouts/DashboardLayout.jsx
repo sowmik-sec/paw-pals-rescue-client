@@ -80,10 +80,10 @@ function DashboardLayout() {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="all-donation">All Donation </NavLink>
+                  <NavLink to="all-donations">All Donations</NavLink>
                 </li>
                 <li>
-                  <NavLink to="adoption-requests">Adoption Request</NavLink>
+                  <NavLink to="adoption-requests">Adoption Requests</NavLink>
                 </li>
                 <li>
                   <NavLink to="users">All Users</NavLink>

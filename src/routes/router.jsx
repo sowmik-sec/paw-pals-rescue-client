@@ -20,6 +20,8 @@ import DonationCampaigns from "../pages/DonationCampaigns/DonationCampaigns";
 import DonationDetails from "../pages/DonationCampaigns/DonationDetails";
 import AdminRoute from "./AdminRoute";
 import Users from "../pages/Dashboard/Users/Users";
+import AllDonations from "../pages/Dashboard/AllDonations/AllDonations";
+import AllDonationCampaigns from "../pages/Dashboard/AllDonationCampaigns/AllDonationCampaigns";
 
 const router = createBrowserRouter([
   {
@@ -159,6 +161,22 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <Users />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/all-donations",
+        element: (
+          <AdminRoute>
+            <AllDonations />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/all-donation-campaigns",
+        element: (
+          <AdminRoute>
+            <AllDonationCampaigns />
           </AdminRoute>
         ),
       },
