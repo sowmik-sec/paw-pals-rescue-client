@@ -3,6 +3,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import LoaderSpinner from "../../../components/LoaderSpinner/LoaderSpinner";
 import AdoptionRequestRow from "./AdoptionRequestRow";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 function AdoptionRequest() {
   const axiosSecure = useAxiosSecure();
@@ -60,6 +61,9 @@ function AdoptionRequest() {
   }
   return (
     <div>
+      <Helmet>
+        <title>Paw Pals Rescue | Dashboard - Adoption Requests</title>
+      </Helmet>
       <h2 className="text-4xl mb-4">
         Total Adoption Requests: {adoptionRequests.length}
       </h2>

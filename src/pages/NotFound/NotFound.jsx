@@ -1,8 +1,12 @@
+import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 
 function NotFound() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6 text-center">
+      <Helmet>
+        <title>Paw Pals Rescue | Not Found</title>
+      </Helmet>
       <div className="max-w-lg mx-auto">
         <img
           src="https://i.imgur.com/qIufhof.png" // A cute image of a sad pet

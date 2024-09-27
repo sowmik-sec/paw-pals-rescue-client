@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 function Pets() {
   const axiosSecure = useAxiosSecure();
@@ -94,6 +95,9 @@ function Pets() {
 
   return (
     <div>
+      <Helmet>
+        <title>Paw Pals Rescue | Pets</title>
+      </Helmet>
       <div className="sticky top-0 z-10 bg-gray-700 mb-10 shadow-md w-[450px] mx-auto rounded-md p-2">
         <div className="flex justify-center my-5">
           <div className="lg:flex">

@@ -3,6 +3,7 @@ import LoaderSpinner from "../../../components/LoaderSpinner/LoaderSpinner";
 import AdoptModal from "../../../components/AdoptModal/AdoptModal";
 import usePetDetails from "../../../hooks/usePetDetails";
 import useAuth from "../../../hooks/useAuth";
+import { Helmet } from "react-helmet-async";
 
 function PetDetails() {
   const params = useParams();
@@ -26,6 +27,9 @@ function PetDetails() {
   } = petDetails;
   return (
     <div className="max-w-4xl mx-auto p-5 mt-10 shadow-lg rounded-lg">
+      <Helmet>
+        <title>Paw Pals Rescue | Pet Details </title>
+      </Helmet>
       <AdoptModal petDetails={petDetails} refetch={refetch} />
       {/* Pet Image */}
       <div className="flex justify-center">

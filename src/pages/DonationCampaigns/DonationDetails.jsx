@@ -7,6 +7,7 @@ import DonateModal from "../../components/DonateModal/DonateModal";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import useAdmin from "../../hooks/useAdmin";
+import { Helmet } from "react-helmet-async";
 
 const stripePromise = loadStripe(import.meta.env.VITE_PAYMENT_GATEWAY_PK);
 
@@ -42,6 +43,9 @@ function DonationDetails() {
 
   return (
     <div className="container mx-auto p-5 md:p-10">
+      <Helmet>
+        <title>Paw Pals Rescue | Donation Details </title>
+      </Helmet>
       <Elements stripe={stripePromise}>
         <DonateModal pet={donationDetails} />
       </Elements>

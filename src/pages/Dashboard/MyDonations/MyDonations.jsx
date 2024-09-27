@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import LoaderSpinner from "../../../components/LoaderSpinner/LoaderSpinner";
+import { Helmet } from "react-helmet-async";
 
 function MyDonations() {
   const axiosSecure = useAxiosSecure();
@@ -21,6 +22,9 @@ function MyDonations() {
 
   return (
     <div className="container mx-auto p-5">
+      <Helmet>
+        <title>Paw Pals Rescue | Dashboard - My Donations</title>
+      </Helmet>
       <h2 className="text-2xl font-bold mb-4">My Donations</h2>
 
       {myDonations?.length === 0 ? (

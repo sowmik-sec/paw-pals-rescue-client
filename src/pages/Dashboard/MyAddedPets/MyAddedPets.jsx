@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import LoaderSpinner from "../../../components/LoaderSpinner/LoaderSpinner";
 import MyAddedPetsRow from "./MyAddedPetsRow";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 function MyAddedPets() {
   const axiosSecure = useAxiosSecure();
@@ -83,6 +84,9 @@ function MyAddedPets() {
   }
   return (
     <div className="overflow-x-auto">
+      <Helmet>
+        <title>Paw Pals Rescue | Dashboard - My Added Pets</title>
+      </Helmet>
       <h2 className="text-3xl">My Total added pets: {myPets.length}</h2>
       <table className="table">
         {/* head */}

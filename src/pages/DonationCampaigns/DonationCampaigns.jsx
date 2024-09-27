@@ -4,6 +4,7 @@ import LoaderSpinner from "../../components/LoaderSpinner/LoaderSpinner";
 import DonationCampaignCard from "./DonationCampaignCard";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 function DonationCampaigns() {
   const axiosSecure = useAxiosSecure();
@@ -65,6 +66,9 @@ function DonationCampaigns() {
 
   return (
     <div className="my-20">
+      <Helmet>
+        <title>Paw Pals Rescue | Donation Campaigns</title>
+      </Helmet>
       {donationCampaigns?.length === 0 && (
         <h2 className="text-center my-5 text-red-500 font-bold text-4xl">
           No donation campaign is running

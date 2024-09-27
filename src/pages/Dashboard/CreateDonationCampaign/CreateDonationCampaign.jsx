@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
+import { Helmet } from "react-helmet-async";
 
 function CreateDonationCampaign() {
   const axiosSecure = useAxiosSecure();
@@ -65,6 +66,9 @@ function CreateDonationCampaign() {
 
   return (
     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+      <Helmet>
+        <title>Paw Pals Rescue | Dashboard - Create Donation Campaign</title>
+      </Helmet>
       <form onSubmit={handleSubmit(onSubmit)} className="card-body">
         {/* Pet Name Field */}
         <div className="form-control">

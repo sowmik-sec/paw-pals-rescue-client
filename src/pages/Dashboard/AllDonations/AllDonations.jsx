@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import LoaderSpinner from "../../../components/LoaderSpinner/LoaderSpinner";
+import { Helmet } from "react-helmet-async";
 
 function AllDonations() {
   const axiosSecure = useAxiosSecure();
@@ -30,6 +31,9 @@ function AllDonations() {
 
   return (
     <div className="container mx-auto p-5 md:p-10">
+      <Helmet>
+        <title>Paw Pals Rescue | Dashboard - All Donations</title>
+      </Helmet>
       <h1 className="text-3xl font-bold mb-6">All Donations</h1>
 
       <div className="overflow-x-auto">

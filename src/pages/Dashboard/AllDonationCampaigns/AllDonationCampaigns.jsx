@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import LoaderSpinner from "../../../components/LoaderSpinner/LoaderSpinner";
 import AllDonationCampaignsRow from "./AllDonationCampaignsRow";
+import { Helmet } from "react-helmet-async";
 
 function AllDonationCampaigns() {
   const axiosSecure = useAxiosSecure();
@@ -20,6 +21,9 @@ function AllDonationCampaigns() {
   }
   return (
     <div>
+      <Helmet>
+        <title>Paw Pals Rescue | Dashboard - All Donation Campaign</title>
+      </Helmet>
       <h2 className="text-4xl">
         Total Donation Campaigns: {campaigns?.length}
       </h2>

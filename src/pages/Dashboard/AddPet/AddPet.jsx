@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
 import usePetDetails from "../../../hooks/usePetDetails";
 import LoaderSpinner from "../../../components/LoaderSpinner/LoaderSpinner";
+import { Helmet } from "react-helmet-async";
 
 function AddPet() {
   const axiosSecure = useAxiosSecure();
@@ -108,6 +109,9 @@ function AddPet() {
 
   return (
     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+      <Helmet>
+        <title>Paw Pals Rescue | Dashboard - Add Pet</title>
+      </Helmet>
       <form onSubmit={handleSubmit(onSubmit)} className="card-body">
         {/* Pet Name Field */}
         <div className="form-control">

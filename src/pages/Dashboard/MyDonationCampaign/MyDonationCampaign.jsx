@@ -3,6 +3,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import LoaderSpinner from "../../../components/LoaderSpinner/LoaderSpinner";
 import MyDonationCampaignRow from "./MyDonationCampaignRow";
+import { Helmet } from "react-helmet-async";
 
 function MyDonationCampaign() {
   const axiosSecure = useAxiosSecure();
@@ -34,6 +35,9 @@ function MyDonationCampaign() {
   }
   return (
     <div>
+      <Helmet>
+        <title>Paw Pals Rescue | Dashboard - My Donation Campaign</title>
+      </Helmet>
       <h2 className="text-4xl">My donation campaigns</h2>
       <div className="overflow-x-auto">
         <table className="table">
