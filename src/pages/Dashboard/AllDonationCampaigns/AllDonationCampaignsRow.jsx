@@ -22,14 +22,14 @@ function AllDonationCampaignsRow({ campaign, index }) {
       </td>
       <td>{max_donation}</td>
       <td>{totalAmount}</td>
-      <tr>
+      <td>
         <button
           className="btn btn-sm btn-info"
           onClick={() => navigate(`/donation-details/${campaign._id}`)}
         >
           Details
         </button>
-      </tr>
+      </td>
     </tr>
   );
 }

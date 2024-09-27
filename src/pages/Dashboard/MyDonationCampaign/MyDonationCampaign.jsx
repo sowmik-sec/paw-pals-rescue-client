@@ -7,7 +7,11 @@ import MyDonationCampaignRow from "./MyDonationCampaignRow";
 function MyDonationCampaign() {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const { data: myCampaigns, isLoading } = useQuery({
+  const {
+    data: myCampaigns,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["myDonationCampaigns", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(
@@ -20,7 +24,15 @@ function MyDonationCampaign() {
   if (isLoading) {
     return <LoaderSpinner />;
   }
-
+  if (isError) {
+    return (
+      <h2>Something went wrong or you do not have any donation campaign</h2>
+    );
+  }
+  if (myCampaigns?.length === 0) {
+    return <h3 className="text-3xl">You have no donation campaign.</h3>;
+  }
+  console.log(myCampaigns);
   return (
     <div>
       <h2 className="text-4xl">My donation campaigns</h2>
