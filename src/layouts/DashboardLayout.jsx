@@ -25,7 +25,7 @@ function DashboardLayout() {
         </label>
 
         {/* Drawer Content (Main Page) */}
-        <div className="drawer-content flex flex-col items-center justify-center">
+        <div className="drawer-content flex flex-col items-center mt-5">
           <Outlet />
         </div>
 
