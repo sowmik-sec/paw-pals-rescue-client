@@ -1,8 +1,14 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { FaBars } from "react-icons/fa"; // Install react-icons: npm install react-icons
 import Navbar from "../shared/Navbar/Navbar";
+import useAdmin from "../hooks/useAdmin";
+import LoaderSpinner from "../components/LoaderSpinner/LoaderSpinner";
 
 function DashboardLayout() {
+  const [isAdmin, isAdminLoading] = useAdmin();
+  if (isAdminLoading) {
+    return <LoaderSpinner />;
+  }
   return (
     <div>
       <Navbar />
@@ -31,28 +37,59 @@ function DashboardLayout() {
             className="drawer-overlay"
           ></label>
           <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-            <li>
-              <NavLink to="add-pet">Add a pet</NavLink>
-            </li>
-            <li>
-              <NavLink to="my-added-pets">My added pets</NavLink>
-            </li>
-            <li>
-              <NavLink to="adoption-requests">Adoption Request</NavLink>
-            </li>
-            <li>
-              <NavLink to="create-donation-campaign">
-                Create Donation Campaign
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="my-donation-campaigns">
-                My Donation Campaigns
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="my-donation">My Donation </NavLink>
-            </li>
+            {!isAdmin && (
+              <>
+                <li>
+                  <NavLink to="add-pet">Add a pet</NavLink>
+                </li>
+                <li>
+                  <NavLink to="my-added-pets">My added pets</NavLink>
+                </li>
+
+                <li>
+                  <NavLink to="create-donation-campaign">
+                    Create Donation Campaign
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="my-donation-campaigns">
+                    My Donation Campaigns
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="my-donation">My Donation </NavLink>
+                </li>
+              </>
+            )}
+            {isAdmin && (
+              <>
+                <li>
+                  <NavLink to="add-pet">Add a pet</NavLink>
+                </li>
+                <li>
+                  <NavLink to="my-added-pets">My added pets</NavLink>
+                </li>
+                <li>
+                  <NavLink to="create-donation-campaign">
+                    Create Donation Campaign
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="all-donation-campaigns">
+                    All Donation Campaigns
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="all-donation">All Donation </NavLink>
+                </li>
+                <li>
+                  <NavLink to="adoption-requests">Adoption Request</NavLink>
+                </li>
+                <li>
+                  <NavLink to="users">All Users</NavLink>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>
