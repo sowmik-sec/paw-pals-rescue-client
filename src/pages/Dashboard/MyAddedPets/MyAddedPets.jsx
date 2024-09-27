@@ -83,6 +83,7 @@ function MyAddedPets() {
   }
   return (
     <div className="overflow-x-auto">
+      <h2 className="text-3xl">My Total added pets: {myPets.length}</h2>
       <table className="table">
         {/* head */}
         <thead>

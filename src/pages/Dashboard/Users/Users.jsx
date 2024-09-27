@@ -59,6 +59,9 @@ function Users() {
   if (isLoading) {
     return <LoaderSpinner />;
   }
+  if (users?.length === 0) {
+    return <h2 className="text-4xl">There is no added users</h2>;
+  }
   return (
     <div>
       <div className="flex justify-evenly my-4">

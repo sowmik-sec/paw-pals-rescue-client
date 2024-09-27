@@ -55,9 +55,14 @@ function AdoptionRequest() {
       </h2>
     );
   }
+  if (adoptionRequests?.length === 0) {
+    return <h2 className="text-4xl">There is no adoption request</h2>;
+  }
   return (
     <div>
-      <h2 className="text-4xl mb-4">All Adoption Requests</h2>
+      <h2 className="text-4xl mb-4">
+        Total Adoption Requests: {adoptionRequests.length}
+      </h2>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
