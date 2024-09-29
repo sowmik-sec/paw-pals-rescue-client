@@ -46,12 +46,12 @@ This project is a **Pet Donation and Adoption Platform** where users can donate 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo.git
+   git clone [https://github.com/your-repo.git](https://github.com/sowmik-sec/paw-pals-rescue-client
    ```
 
 2. Navigate to the project directory:
    ```bash
-   cd pet-adoption-platform
+   cd paw-pals-rescue-client
    ```
 
 3. Install dependencies:
