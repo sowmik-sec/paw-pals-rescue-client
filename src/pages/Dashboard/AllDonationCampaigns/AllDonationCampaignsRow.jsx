@@ -25,7 +25,9 @@ function AllDonationCampaignsRow({ campaign, index }) {
       <td>
         <button
           className="btn btn-sm btn-info"
-          onClick={() => navigate(`/donation-details/${campaign._id}`)}
+          onClick={() =>
+            navigate(`/donation-details/${campaign.id || campaign._id}`)
+          }
         >
           Details
         </button>

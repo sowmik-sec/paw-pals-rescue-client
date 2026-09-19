@@ -15,11 +15,10 @@ function MyDonationCampaign() {
   } = useQuery({
     queryKey: ["myDonationCampaigns", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/my-donation-campaigns?email=${user?.email}`
-      );
+      const res = await axiosSecure.get("/api/v1/campaigns/creator/me");
       return res.data;
     },
+    enabled: !!user?.email,
   });
 
   if (isLoading) {
@@ -58,7 +57,7 @@ function MyDonationCampaign() {
           <tbody>
             {myCampaigns?.map((campaign, index) => (
               <MyDonationCampaignRow
-                key={campaign._id}
+                key={campaign.id || campaign._id}
                 campaign={campaign}
                 index={index + 1}
               />

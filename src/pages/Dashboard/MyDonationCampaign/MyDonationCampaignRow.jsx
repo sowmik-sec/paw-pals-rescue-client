@@ -29,7 +29,7 @@ function MyDonationCampaignRow({ campaign, index }) {
       <td>{totalAmount}</td>
       <th>
         <button
-          onClick={() => handleViewDetails(campaign._id)}
+          onClick={() => handleViewDetails(campaign.id || campaign._id)}
           className="btn btn-primary text-white border-t-0 border-x-0 bg-orange-500 hover:bg-orange-700"
         >
           View details

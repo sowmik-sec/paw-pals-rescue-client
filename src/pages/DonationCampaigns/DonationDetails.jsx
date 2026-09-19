@@ -20,7 +20,7 @@ function DonationDetails() {
   const { data: donationDetails, isLoading } = useQuery({
     queryKey: ["donationDetails", id],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/donation-campaign/${id}`);
+      const res = await axiosSecure.get(`/api/v1/campaigns/${id}`);
       return res.data;
     },
   });

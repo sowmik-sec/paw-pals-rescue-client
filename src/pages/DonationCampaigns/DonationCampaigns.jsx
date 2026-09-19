@@ -21,7 +21,7 @@ function DonationCampaigns() {
     queryKey: ["donationCampaigns"],
     queryFn: async ({ pageParam = 1 }) => {
       const res = await axiosSecure.get(
-        `/donation-campaigns?page=${pageParam}&limit=${limit}`
+        `/api/v1/campaigns?page=${pageParam}&limit=${limit}`
       );
       return res.data;
     },
@@ -76,7 +76,10 @@ function DonationCampaigns() {
       )}
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {donationCampaigns.map((campaign) => (
-          <DonationCampaignCard key={campaign._id} campaign={campaign} />
+          <DonationCampaignCard
+            key={campaign.id || campaign._id}
+            campaign={campaign}
+          />
         ))}
       </div>
       <div ref={loadMoreRef}>{isFetchingNextPage && <LoaderSpinner />}</div>

@@ -9,7 +9,7 @@ function AllDonationCampaigns() {
   const { data: campaigns, isLoading } = useQuery({
     queryKey: ["allDonationCampaigns"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/all-donation-campaigns");
+      const res = await axiosSecure.get("/api/v1/campaigns/admin/all");
       return res.data;
     },
   });
@@ -45,7 +45,7 @@ function AllDonationCampaigns() {
           <tbody>
             {campaigns.map((campaign, index) => (
               <AllDonationCampaignsRow
-                key={campaign._id}
+                key={campaign.id || campaign._id}
                 campaign={campaign}
                 index={index}
               />

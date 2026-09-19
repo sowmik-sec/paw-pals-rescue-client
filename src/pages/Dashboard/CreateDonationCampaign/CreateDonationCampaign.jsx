@@ -40,7 +40,7 @@ function CreateDonationCampaign() {
 
       // Send the form data to the backend API
       const response = await axiosSecure.post(
-        "/create-donation-campaign",
+        "/api/v1/campaigns",
         formData
       );
 
