@@ -12,7 +12,7 @@ function usePetDetails(petId) {
   } = useQuery({
     queryKey: ["petDetails", petId],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/pets/details/${petId}`);
+      const res = await axiosSecure.get(`/api/v1/pets/${petId}`);
       return res.data;
     },
     enabled: !!petId,

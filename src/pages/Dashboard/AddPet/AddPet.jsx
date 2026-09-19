@@ -72,10 +72,10 @@ function AddPet() {
       let response;
       if (params.id) {
         // Update existing pet
-        response = await axiosSecure.put(`/update-pet/${params.id}`, formData);
+        response = await axiosSecure.put(`/api/v1/pets/${params.id}`, formData);
       } else {
         // Add new pet
-        response = await axiosSecure.post("/add-pet", formData);
+        response = await axiosSecure.post("/api/v1/pets", formData);
       }
 
       if (response.data?.insertedId || response.data?.modifiedCount > 0) {

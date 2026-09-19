@@ -25,7 +25,7 @@ function Pets() {
     queryKey: ["pets", category],
     queryFn: async ({ pageParam = 1 }) => {
       const res = await axiosSecure.get(
-        `/pets?category=${category}&page=${pageParam}&limit=${limit}`
+        `/api/v1/pets?category=${category}&page=${pageParam}&limit=${limit}`
       );
       return res.data;
     },

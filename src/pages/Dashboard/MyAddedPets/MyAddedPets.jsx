@@ -17,7 +17,7 @@ function MyAddedPets() {
   } = useQuery({
     queryKey: ["myPets", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/my-pets?email=${user?.email}`);
+      const res = await axiosSecure.get(`/api/v1/pets/owner/me`);
       return res.data;
     },
   });
@@ -61,7 +61,7 @@ function MyAddedPets() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/delete-pet/${id}`).then((res) => {
+        axiosSecure.delete(`/api/v1/pets/${id}`).then((res) => {
           if (res.data.deletedCount === 1) {
             Swal.fire({
               title: "Deleted!",
