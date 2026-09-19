@@ -34,19 +34,30 @@ function AdoptModal({ petDetails, refetch }) {
         address: address,
       },
     };
-    axiosSecure.post("/pet-request", adoptInfo).then((res) => {
-      if (res.data.insertedId) {
-        document.getElementById("my_modal_5").close();
+    axiosSecure
+      .post("/api/v1/adoptions", adoptInfo)
+      .then((res) => {
+        if (res.data.insertedId || res.data.acknowledged) {
+          document.getElementById("my_modal_5").close();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your request has been sent",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          refetch();
+        }
+      })
+      .catch((err) => {
+        const message =
+          err.response?.data?.message || "Failed to submit adoption request";
         Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Your request has been sent",
-          showConfirmButton: false,
-          timer: 1500,
+          icon: "error",
+          title: "Adoption Request Failed",
+          text: message,
         });
-        refetch();
-      }
-    });
+      });
   };
 
   return (

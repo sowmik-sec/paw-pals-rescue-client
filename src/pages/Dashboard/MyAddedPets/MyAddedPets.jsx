@@ -34,7 +34,7 @@ function MyAddedPets() {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure
-          .patch(`/make-adopted/${id}`)
+          .patch(`/api/v1/adoptions/${id}/approve`)
           .then((res) => {
             if (res.data?.acknowledged) {
               Swal.fire({
@@ -45,7 +45,14 @@ function MyAddedPets() {
               refetch();
             }
           })
-          .catch((err) => console.error(err));
+          .catch((err) => {
+            console.error(err);
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: err.response?.data?.message || "Failed to update adoption status",
+            });
+          });
       }
     });
   };
