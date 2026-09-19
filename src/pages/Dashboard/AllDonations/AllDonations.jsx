@@ -12,7 +12,7 @@ function AllDonations() {
   } = useQuery({
     queryKey: ["donationData"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/all-donations");
+      const res = await axiosSecure.get("/api/v1/donations/admin/all");
       return res.data;
     },
   });

@@ -9,11 +9,12 @@ function MyDonations() {
   const { user } = useAuth();
 
   const { data: myDonations, isLoading } = useQuery({
-    queryKey: ["myDonations", user.email],
+    queryKey: ["myDonations", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/my-donations?email=${user.email}`);
+      const res = await axiosSecure.get("/api/v1/donations/user/me");
       return res.data;
     },
+    enabled: !!user?.email,
   });
 
   if (isLoading) {

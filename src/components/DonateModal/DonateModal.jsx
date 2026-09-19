@@ -22,7 +22,7 @@ function DonateModal({ pet }) {
   // Fetch the total donations for the pet
   useEffect(() => {
     axiosSecure
-      .get(`/donations/total/${_id}`) // Endpoint to get total donations for the pet
+      .get(`/api/v1/donations/campaign/${_id}/total`)
       .then((res) => {
         const totalDonations = res.data.totalDonations || 0;
         const remainingDonation = max_donation - totalDonations;
@@ -35,7 +35,7 @@ function DonateModal({ pet }) {
   const handleDonationChange = debounce((value) => {
     if (value > 0 && value <= availableDonation) {
       axiosSecure
-        .post("/create-donation-intent", {
+        .post("/api/v1/donations/payment-intent", {
           donation: value,
         })
         .then((res) => {
@@ -102,8 +102,8 @@ function DonateModal({ pet }) {
           pet_id: _id,
           status: "succeeded", // Update the status
         };
-        const res = await axiosSecure.post("/donations", payment);
-        if (res.data?.donationResult?.insertedId) {
+        const res = await axiosSecure.post("/api/v1/donations", payment);
+        if (res.data?.donationResult?.insertedId || res.data?.insertedId) {
           Swal.fire({
             position: "top-end",
             icon: "success",
