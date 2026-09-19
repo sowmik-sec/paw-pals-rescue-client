@@ -73,7 +73,7 @@ function Login() {
           image: result?.user?.photoURL,
           uid: result?.user?.uid,
         };
-        axiosPublic.post("/users", userInfo).then((res) => {
+        axiosPublic.post("/api/v1/users", userInfo).then((res) => {
           if (res.data.insertedId) {
             //   reset();
             Swal.fire({

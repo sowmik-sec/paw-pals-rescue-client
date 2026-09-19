@@ -27,7 +27,7 @@ function Signup() {
               image: data.photo,
               uid: userCredential.user.uid,
             };
-            axiosPublic.post("/users", userInfo).then((res) => {
+            axiosPublic.post("/api/v1/users", userInfo).then((res) => {
               if (res.data.insertedId) {
                 //   reset();
                 Swal.fire({

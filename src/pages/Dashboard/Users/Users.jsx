@@ -14,12 +14,13 @@ function Users() {
   } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/users");
+      const res = await axiosSecure.get("/api/v1/users");
       return res.data;
     },
   });
   const handleMakeAdmin = (user) => {
-    axiosSecure.patch(`/users/admin/${user._id}`).then((res) => {
+    const userId = user.id || user._id;
+    axiosSecure.patch(`/api/v1/users/admin/${userId}`).then((res) => {
       if (res.data.modifiedCount > 0) {
         refetch();
         Swal.fire({
@@ -33,6 +34,7 @@ function Users() {
     });
   };
   const handleDeleteUser = (user) => {
+    const userId = user.id || user._id;
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -43,7 +45,7 @@ function Users() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/users/${user._id}`).then((res) => {
+        axiosSecure.delete(`/api/v1/users/${userId}`).then((res) => {
           if (res.data.deletedCount > 0) {
             refetch();
             Swal.fire({
@@ -85,7 +87,7 @@ function Users() {
           </thead>
           <tbody>
             {users.map((user, index) => (
-              <tr key={user._id}>
+              <tr key={user.id || user._id}>
                 <th>{index + 1}</th>
                 <td>
                   <div className="flex items-center gap-3">
