@@ -9,7 +9,7 @@ function PetStoryPage() {
   const { data: story, isLoading } = useQuery({
     queryKey: ["story", params.id],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/stories/${params.id}`);
+      const res = await axiosPublic.get(`/api/v1/stories/${params.id}`);
       return res.data;
     },
   });

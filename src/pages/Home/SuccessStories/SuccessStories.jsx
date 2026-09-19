@@ -8,7 +8,7 @@ function SuccessStories() {
   const { data: stories, isLoading } = useQuery({
     queryKey: ["successStories"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/success-stories");
+      const res = await axiosPublic.get("/api/v1/stories");
       return res.data;
     },
   });
@@ -36,7 +36,7 @@ function SuccessStories() {
               <h3 className="text-2xl font-semibold mt-4">{story.name}</h3>
               <p className="mt-2">{story.story}</p>
               <Link
-                to={`/stories/${story._id}`}
+                to={`/stories/${story.id}`}
                 className="inline-block mt-4 px-4 py-2 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-colors"
               >
                 Read Full Story

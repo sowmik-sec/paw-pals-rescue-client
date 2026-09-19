@@ -11,7 +11,7 @@ function PetCategories() {
   const { data: allCategories, isPending } = useQuery({
     queryKey: ["petCategories"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/pet-categories");
+      const res = await axiosPublic.get("/api/v1/pets/categories");
       return res.data;
     },
   });
@@ -35,7 +35,7 @@ function PetCategories() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {categories?.map((category) => (
-            <PetCategoryCard category={category} key={category._id} />
+            <PetCategoryCard category={category} key={category.id} />
           ))}
         </div>
         <div className="flex justify-center mt-5">
